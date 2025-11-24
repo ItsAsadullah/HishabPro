@@ -522,6 +522,8 @@
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
 
+    console.log('Firebase initialized successfully');
+
     let currentUser = null;
     let accounts = ["Cash", "Bkash", "Nagad", "Rocket", "Bank"];
     let incCats = ["Salary", "Business", "Freelance", "Gift"];
@@ -587,6 +589,7 @@
 
     // --- AUTH LOGIC ---
     window.toggleAuthMode = () => {
+        console.log('toggleAuthMode called');
         isLoginMode = !isLoginMode;
         document.getElementById('auth-header').innerText = isLoginMode ? 'লগইন করুন' : 'নতুন একাউন্ট খুলুন';
         document.getElementById('auth-action-btn').innerText = isLoginMode ? 'লগইন' : 'রেজিস্টার';
@@ -628,9 +631,11 @@
                 btn.innerText = "রেজিস্টার"; btn.disabled = false;
                 alert("রেজিস্ট্রেশন সমস্যা: " + e.message);
             });
+        }
     };
 
     window.loginWithGoogle = () => {
+        console.log('Google login clicked');
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 // Successfully signed in
