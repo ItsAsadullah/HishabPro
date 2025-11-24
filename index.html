@@ -504,7 +504,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, push, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithRedirect, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithRedirect, getRedirectResult, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDgffKdfGFRvz11d8NVGUe2SKs1M_U8AD4",
@@ -545,6 +545,18 @@
         new Rolldate({ el: '#filter-start', format: 'YYYY-MM-DD', lang: bnLang });
         new Rolldate({ el: '#filter-end', format: 'YYYY-MM-DD', lang: bnLang });
         checkTheme();
+        
+        // Check for Google Sign-In redirect result
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result && result.user) {
+                    console.log('Google Sign-In successful:', result.user);
+                }
+            })
+            .catch((error) => {
+                console.error('Google Sign-In error:', error);
+                alert('Google লগইন সমস্যা: ' + error.message);
+            });
         
         // Auth Listener
         onAuthStateChanged(auth, (user) => {
